@@ -1,13 +1,13 @@
 name: Run Unit Test via Pytest
 
-on: [push]
+on: [ push ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.13"]
+        python-version: [ "3.13" ]
 
     steps:
       - uses: actions/checkout@v3
@@ -26,4 +26,7 @@ jobs:
         continue-on-error: true
       - name: Test with pytest
         run: |
-          pytest -v -s
+          coverage run -m pytest  -v -s
+      - name: Generate Coverage Report
+        run: |
+          coverage report -m
