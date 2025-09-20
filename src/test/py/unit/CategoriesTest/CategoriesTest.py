@@ -19,36 +19,36 @@ class CategoriesTest(unittest.TestCase):
         self.category.add_element(Element("", 1))
         self.assertEqual(self.category.get_sum(), 1)
 
-    def test_element_of_type_cost_has_negative_sum(self):
-        self.category.add_element(Element("", 1, FinancialType.COST))
+    def test_category_of_type_cost_has_negative_sum(self):
+        self.category.set_type(FinancialType.COST)
+        self.category.add_element(Element("", 1))
         self.assertEqual(self.category.get_sum(), -1)
 
     def test_element_of_type_saving_has_negative_sum(self):
-        self.category.add_element(Element("", 1, FinancialType.SAVING))
+        self.category.set_type(FinancialType.SAVING)
+        self.category.add_element(Element("", 1))
         self.assertEqual(self.category.get_sum(), -1)
 
-    def test_build_correct_sum_for_mixed_element_types(self):
-        self.category.add_element(Element("", 10, FinancialType.INCOME))
-        self.category.add_element(Element("", 3, FinancialType.SAVING))
-        self.category.add_element(Element("", 4, FinancialType.COST))
-        self.assertEqual(self.category.get_sum(), 3)
+    def test_build_correct_sum_for_multiple_element_types(self):
+        self.category.add_element(Element("", 10))
+        self.category.add_element(Element("", 3))
+        self.category.add_element(Element("", 4))
+        self.assertEqual(self.category.get_sum(), 17)
 
     def test_throws_on_unknown_financial_type(self):
         with pytest.raises(UnknownFinancialTypeError, match=r"Unknown financial type 'WRONG'"):
-            self.category.add_element(Element("", 1, "WRONG"))
+            self.category.set_type("WRONG")
 
     def test_returns_all_information_of_element(self):
-        self.category.add_element(Element("Salary", 1, FinancialType.INCOME))
-        expected = [{"name": "Salary", "amount": 1, "type": FinancialType.INCOME}]
+        self.category.add_element(Element("Salary", 1))
+        expected = [{"name": "Salary", "amount": 1}]
         self.assertEqual(self.category.get_element_information(), expected)
 
     def test_returns_all_information_for_multiple_elements(self):
-        self.category.add_element(Element("Salary", 10, FinancialType.INCOME))
-        self.category.add_element(Element("Living", 3, FinancialType.COST))
-        self.category.add_element(Element("Saving", 1, FinancialType.SAVING))
+        self.category.add_element(Element("Salary", 10))
+        self.category.add_element(Element("Saving", 1))
         expected = [
-            {"name": "Salary", "amount": 10, "type": FinancialType.INCOME},
-            {"name": "Living", "amount": -3, "type": FinancialType.COST},
-            {"name": "Saving", "amount": -1, "type": FinancialType.SAVING}
+            {"name": "Salary", "amount": 10},
+            {"name": "Saving", "amount": 1}
         ]
         self.assertEqual(self.category.get_element_information(), expected)
