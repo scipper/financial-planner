@@ -4,10 +4,11 @@ from Categories.UnknownFinancialTypeError import UnknownFinancialTypeError
 
 class Element:
     """An element containing an amount of money; either income, saving or cost. """
-    def __init__(self, value: float, financial_type: FinancialType = FinancialType.INCOME):
+    def __init__(self, name: str, value: float, financial_type: FinancialType = FinancialType.INCOME):
         if financial_type != FinancialType.INCOME and financial_type != FinancialType.SAVING and financial_type != FinancialType.COST:
             raise UnknownFinancialTypeError(financial_type)
 
+        self._name = name
         self._type = financial_type
         if self._type == FinancialType.COST or self._type == FinancialType.SAVING:
             value = value * -1
@@ -18,3 +19,6 @@ class Element:
 
     def get_type(self):
         return self._type
+
+    def get_name(self):
+        return self._name
