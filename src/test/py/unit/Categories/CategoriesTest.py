@@ -18,3 +18,13 @@ class CategoriesTest(unittest.TestCase):
     def test_element_of_type_cost_has_negative_sum(self):
         self.category.add_element(Element(1, "cost"))
         self.assertEqual(self.category.get_sum(), -1)
+
+    def test_element_of_type_saving_has_negative_sum(self):
+        self.category.add_element(Element(1, "saving"))
+        self.assertEqual(self.category.get_sum(), -1)
+
+    def test_build_correct_sum_for_mixed_element_types(self):
+        self.category.add_element(Element(10, "income"))
+        self.category.add_element(Element(3, "saving"))
+        self.category.add_element(Element(4, "cost"))
+        self.assertEqual(self.category.get_sum(), 3)
