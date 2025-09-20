@@ -36,7 +36,7 @@ class CategoriesTest(unittest.TestCase):
         self.assertEqual(self.category.get_sum(), 17)
 
     def test_throws_on_unknown_financial_type(self):
-        with pytest.raises(UnknownFinancialTypeError, match=r"Unknown financial type 'WRONG'"):
+        with pytest.raises(UnknownFinancialTypeError, match="Unknown financial type 'WRONG'"):
             self.category.set_type("WRONG")
 
     def test_returns_all_information_of_element(self):
