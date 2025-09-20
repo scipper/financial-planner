@@ -1,11 +1,15 @@
-from enum import Enum
+from Categories.FinancialTypes import FinancialType
+from Categories.UnknownFinancialTypeError import UnknownFinancialTypeError
 
 
 class Element:
     """An element containing an amount of money; either income, saving or cost. """
-    def __init__(self, value: float, financial_type: str = "income"):
+    def __init__(self, value: float, financial_type: FinancialType = FinancialType.INCOME):
+        if financial_type != FinancialType.INCOME and financial_type != FinancialType.SAVING and financial_type != FinancialType.COST:
+            raise UnknownFinancialTypeError(financial_type)
+
         self._type = financial_type
-        if self._type == "cost" or self._type == "saving":
+        if self._type == FinancialType.COST or self._type == FinancialType.SAVING:
             value = value * -1
         self._value = value
 
@@ -14,8 +18,3 @@ class Element:
 
     def get_type(self):
         return self._type
-
-class FinancialType(Enum):
-    INCOME = 1
-    SAVING = 2
-    COST = 3

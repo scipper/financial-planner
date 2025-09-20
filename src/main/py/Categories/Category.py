@@ -1,9 +1,12 @@
 from typing import List
 
 from Categories.Element import Element
+from Categories.FinancialTypes import FinancialType
 
 
 class Category:
+    """A category container 0 or more elements of financial types."""
+
     def __init__(self):
         self.income_elements: List[Element] = []
         self.saving_elements: List[Element] = []
@@ -16,9 +19,9 @@ class Category:
         return sum_income + sum_savings + sum_costs
 
     def add_element(self, element: Element):
-        if element.get_type() == "income":
+        if element.get_type() == FinancialType.INCOME:
             self.income_elements.append(element)
-        elif element.get_type() == "saving":
+        elif element.get_type() == FinancialType.SAVING:
             self.saving_elements.append(element)
-        else :
+        else:
             self.cost_elements.append(element)
